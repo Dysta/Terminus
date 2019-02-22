@@ -20,7 +20,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
@@ -29,8 +29,6 @@ private slots:
 private:
     void createTerminal(QString title);
 
-    bool _change;
-
     Ui::MainWindow *ui;
 
     QWidget* _mainWidget;
@@ -38,6 +36,9 @@ private:
 
     QGroupBox* _terminalBox;
     QPlainTextEdit* _terminal;
+    const QString _html = "<b><span style='color:green'>Jarvis@u-bdx</span>: <span style='color:blue'>~</span>$ </b>";
+    bool _edit;
+
 };
 
 #endif // MAINWINDOW_H

@@ -3,7 +3,8 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    _edit(false)
 {
     ui->setupUi(this);
     this->setWindowTitle("Terminus 2k29");
@@ -26,7 +27,7 @@ void MainWindow::createTerminal(QString title) {
     this->_terminalBox = new QGroupBox(title);
     this->_terminal = new QPlainTextEdit(this->_terminalBox);
 
-    this->_terminal->appendHtml("<b style='color:green'>test</b>");
+    this->_terminal->appendHtml(this->_html);
     this->_terminal->setStyleSheet("background-color:black; color: white;");
 
     connect(this->_terminal, SIGNAL(blockCountChanged(int)),
@@ -36,8 +37,11 @@ void MainWindow::createTerminal(QString title) {
 }
 
 void MainWindow::onBlockCountChanged(int newBlockCount) {
-    std::cout << "new count" << newBlockCount << std::endl;
-    this->_terminal->clear();
-    //this->_terminal->appendHtml("<b style='color:green'>test</b>");
-    std::cout << "end" << std::endl;
+    this->_edit = !this->_edit;
+    if (this->_edit) {
+        std::cout << "new count" << newBlockCount << std::endl;
+        //this->_terminal->clear();
+        this->_terminal->appendHtml(this->_html);
+        std::cout << "end" << std::endl;
+    }
 }
