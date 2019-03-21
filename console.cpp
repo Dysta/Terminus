@@ -12,10 +12,10 @@ Console::Console(QWidget* parent)
 
 void Console::keyPressEvent(QKeyEvent *e) {
     switch (e->key()) {
-        case Qt::Key_Enter:
+        case Qt::Key_Return:
             std::cout << "enter key pressed" << std::endl;
             break;
-        case Qt::Key_Delete:
+        case Qt::Key_Backspace:
             std::cout << "suppr key" << std::endl;
             this->_buffer = this->_buffer.left(this->_buffer.size() - 1);
             qDebug() << this->_buffer;
