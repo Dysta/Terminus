@@ -15,6 +15,8 @@
 
 #include <iostream>
 
+#include "console.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -27,14 +29,6 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-protected:
-    void keyPressEvent(QKeyEvent* event) override;
-    void keyReleaseEvent(QKeyEvent* event) override;
-
-private slots:
-    void onBlockCountChanged(int newBlockCount);
-    void onButtonClic(bool);
-
 private:
     void createTerminal(QString title);
 
@@ -46,8 +40,8 @@ private:
     QKeyEvent* _keyRelease;
 
     QGroupBox* _terminalBox;
-    QPlainTextEdit* _terminal;
-    QLineEdit* _terminalInput;
+    Console* _console;
+
 
     const QString _html = "<b><span style='color:green'>Jarvis@u-bdx</span>: <span style='color:blue'>~</span>$ </b>";
     bool _edit;
