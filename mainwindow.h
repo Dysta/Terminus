@@ -24,7 +24,7 @@ public:
     ~MainWindow();
 
 private:
-    void createTerminal(void);
+    void createTerminal();
     void createMissionBox(const QString& title);
     void createBox(const QString& title);
 

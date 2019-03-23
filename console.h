@@ -8,6 +8,8 @@
 #include <QByteArray>
 #include <QPalette>
 
+#include <QDebug>
+
 
 class Console : public QPlainTextEdit
 {
@@ -22,7 +24,7 @@ private:
     QByteArray _buffer;
     const QString _html = "<b><span style='color:green'>Jarvis@u-bdx</span>: <span style='color:blue'>~</span>$ </b>";
 
-    int _shift;
+    int _cursorPosition;
 };
 
 #endif // CONSOLE_H
