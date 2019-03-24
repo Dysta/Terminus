@@ -10,9 +10,6 @@
 
 #include <QDebug>
 
-#define MAX_COLUMN 100
-
-
 class Console : public QPlainTextEdit
 {
     Q_OBJECT
@@ -20,19 +17,15 @@ class Console : public QPlainTextEdit
 public:
     Console(QWidget* parent = nullptr);
 
-protected slots:
-    void onCursorPositionChange(void);
-    void onNewLine(int newLine);
-
 protected:
     void keyPressEvent(QKeyEvent *e) override;
+    void mousePressEvent(QMouseEvent *e) override;
+    void mouseDoubleClickEvent(QMouseEvent *e) override;
 
     QByteArray _buffer;
-    const QString _html = "<b><span style='color:green'>Jarvis@u-bdx</span>: <span style='color:blue'>~</span>$ </b>";
+    const QString _html = "\r<b><span style='color:green'>Jarvis@u-bdx</span>: <span style='color:blue'>~</span>$ </b>";
 
-    int _currentColumn;
-    int _currentLine;
-    int _lastLine;
+    int _cursorPos;
 };
 
 #endif // CONSOLE_H

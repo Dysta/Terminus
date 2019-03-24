@@ -1,65 +1,80 @@
 #include "console.h"
 
 Console::Console(QWidget* parent)
-    : QPlainTextEdit(parent), _currentColumn(1), _currentLine(1), _lastLine(1)
+    : QPlainTextEdit(parent), _cursorPos(0)
 {
     QPalette p = palette();
     p.setColor(QPalette::Base, Qt::black);
     p.setColor(QPalette::Text, Qt::green);
     this->setPalette(p);
 
-    connect(this, SIGNAL(cursorPositionChanged()),
-            this, SLOT(onCursorPositionChange()));
-    connect(this, SIGNAL(blockCountChanged(int)),
-            this, SLOT(onNewLine(int)));
-
+    this->appendHtml(this->_html);
 }
 
-void Console::onCursorPositionChange() {
-    QTextCursor tmp = this->textCursor();
-    this->_currentColumn = tmp.columnNumber();
-    this->_currentLine = tmp.blockNumber();
-    qDebug() << "cursor Pos :" << _currentColumn;
-    qDebug() << "cursor Line : " << _currentLine;
+// override function for disable mouse click event
+void Console::mousePressEvent(QMouseEvent *e) {
+    Q_UNUSED(e);
 }
 
-void Console::onNewLine(int newLine) {
-    this->_lastLine = newLine;
+// override function for disable mouse double click event
+void Console::mouseDoubleClickEvent(QMouseEvent *e) {
+    Q_UNUSED(e);
 }
 
 void Console::keyPressEvent(QKeyEvent *e) {
-    if ((this->_currentColumn >= MAX_COLUMN || this->_buffer.size() >= MAX_COLUMN )
-            && (e->key() != Qt::Key_Backspace && e->key() != Qt::Key_Delete))
-        return;
-
-    // permet de garder les event du QPlainTextEdit (comme déplacement du curseur et autre)
-    if (e->key() != Qt::Key_Return && e->key() != Qt::Key_Enter)
-        QPlainTextEdit::keyPressEvent(e);
 
     switch (e->key()) {
 
-    case Qt::Key_Backspace:
-    case Qt::Key_Delete:
-        if (this->_buffer.size() > 0)
-            this->_buffer = this->_buffer.remove(this->_currentColumn, 1);
+    case Qt::Key_Left:
+        if (this->_cursorPos > 0) this->_cursorPos--;
+        QPlainTextEdit::keyPressEvent(e);
         break;
+    case Qt::Key_Right:
+        if (this->_cursorPos < this->_buffer.size()) this->_cursorPos++;
+        QPlainTextEdit::keyPressEvent(e);
+        break;
+    case Qt::Key_Up:
+        std::cout << "key up" << std::endl;
+        break;
+    case Qt::Key_Down:
+        std::cout << "key down" << std::endl;
+        break;
+
+    case Qt::Key_Backspace:
+        if (this->_buffer.size() > 0 && this->_cursorPos > 0) {
+            this->_buffer = this->_buffer.remove(this->_cursorPos -1, 1);
+            this->_cursorPos--;
+            QPlainTextEdit::keyPressEvent(e);
+        }
+
+        break;
+    case Qt::Key_Delete:
+        if (this->_buffer.size() > 0) {
+            this->_buffer = this->_buffer.remove(this->_cursorPos, 1);
+            QPlainTextEdit::keyPressEvent(e);
+        }
+        break;
+
     case Qt::Key_Return:
     case Qt::Key_Enter:
         // appel a parserInputrr
+        // ajout du buffer dans l'historique
         this->_buffer.clear();
+        this->_cursorPos = 0;
+        QPlainTextEdit::keyPressEvent(e);
+        this->appendHtml(this->_html);
         break;
+
     default:
         QByteArray key(e->text().toStdString().c_str());
-        if (this->_currentColumn <= 0)
-            this->_buffer.insert(0, key);
-        else
-            this->_buffer.insert(this->_currentColumn - 1, key);
+        this->_buffer.insert(this->_cursorPos, key);
+        this->_cursorPos++;
+        QPlainTextEdit::keyPressEvent(e);
         break;
+
     }
 
     qDebug() << this->_buffer;
     qDebug() << "buffer size: " << this->_buffer.size();
-    qDebug() << "current cursor pos: " << this->_currentColumn;
-    qDebug() << "current cursor line: " << this->_currentLine;
-    qDebug() << "last line: " << this->_lastLine;
- }
+    qDebug() << "current cursor pos: " << this->_cursorPos;
+}
