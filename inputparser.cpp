@@ -1,6 +1,7 @@
 #include "inputparser.h"
 
-InputParser::InputParser()
-{
+InputParser::InputParser(){}
+
+void parser(QByteArray buffer){
 
 }
