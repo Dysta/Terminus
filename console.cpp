@@ -9,6 +9,8 @@ Console::Console(QWidget* parent)
     this->setPalette(p);
 
     this->appendHtml(this->_html);
+
+    this->_parser = new InputParser();
 }
 
 // override function for disable mouse click event
@@ -35,6 +37,7 @@ void Console::keyPressEvent(QKeyEvent *e) {
             this->_cursorPos--;
             QPlainTextEdit::keyPressEvent(e);
         }
+
         break;
     case Qt::Key_Right:
         if (this->_cursorPos < this->_buffer.size()) this->_cursorPos++;
