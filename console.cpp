@@ -23,6 +23,9 @@ void Console::mouseDoubleClickEvent(QMouseEvent *e) {
 
 void Console::keyPressEvent(QKeyEvent *e) {
 
+    if (e->matches(QKeySequence::SelectAll))
+        return;
+
     switch (e->key()) {
 
     case Qt::Key_Left:
@@ -30,8 +33,6 @@ void Console::keyPressEvent(QKeyEvent *e) {
             this->_cursorPos--;
             QPlainTextEdit::keyPressEvent(e);
         }
-
-
 
         break;
     case Qt::Key_Right:
