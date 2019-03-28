@@ -33,7 +33,6 @@ void Console::keyPressEvent(QKeyEvent *e) {
             this->_cursorPos--;
             QPlainTextEdit::keyPressEvent(e);
         }
-
         break;
     case Qt::Key_Right:
         if (this->_cursorPos < this->_buffer.size()) this->_cursorPos++;
@@ -67,7 +66,6 @@ void Console::keyPressEvent(QKeyEvent *e) {
         // ajout du buffer dans l'historique
         this->_buffer.clear();
         this->_cursorPos = 0;
-        QPlainTextEdit::keyPressEvent(e);
         this->appendHtml(this->_html);
         break;
 
