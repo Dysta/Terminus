@@ -4,14 +4,8 @@
 #include <QMainWindow>
 #include <QWidget>
 #include <QGridLayout>
-#include <QGroupBox>
-#include <QPlainTextEdit>
-#include <QLineEdit>
 #include <QPushButton>
-#include <QEvent>
-#include <QKeyEvent>
-
-#include <QString>
+#include <QGroupBox>
 
 #include <iostream>
 
@@ -30,21 +24,19 @@ public:
     ~MainWindow();
 
 private:
-    void createTerminal(QString title);
+    void createTerminal();
+    void createMissionBox(const QString& title);
+    void createBox(const QString& title);
 
     Ui::MainWindow *ui;
 
     QWidget* _mainWidget;
     QGridLayout* _grid;
-    QKeyEvent* _keyPress;
-    QKeyEvent* _keyRelease;
 
-    QGroupBox* _terminalBox;
     Console* _console;
 
-
-    const QString _html = "<b><span style='color:green'>Jarvis@u-bdx</span>: <span style='color:blue'>~</span>$ </b>";
-    bool _edit;
+    QGroupBox* _missionBox;
+    QGroupBox* _box;
 
 };
 
