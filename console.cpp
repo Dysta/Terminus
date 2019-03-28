@@ -25,6 +25,9 @@ void Console::mouseDoubleClickEvent(QMouseEvent *e) {
 
 void Console::keyPressEvent(QKeyEvent *e) {
 
+    if (e->matches(QKeySequence::SelectAll))
+        return;
+
     switch (e->key()) {
 
     case Qt::Key_Left:
@@ -66,7 +69,6 @@ void Console::keyPressEvent(QKeyEvent *e) {
         // ajout du buffer dans l'historique
         this->_buffer.clear();
         this->_cursorPos = 0;
-        QPlainTextEdit::keyPressEvent(e);
         this->appendHtml(this->_html);
         break;
 
