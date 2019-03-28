@@ -11,6 +11,8 @@ Console::Console(QWidget* parent)
     this->appendHtml(this->_html);
 
     this->_parser = new InputParser();
+
+    this->_alphaChar = new QRegExp("[ A-Za-z0-9\u0008\r]+");
 }
 
 // override function for disable mouse click event
@@ -24,6 +26,9 @@ void Console::mouseDoubleClickEvent(QMouseEvent *e) {
 }
 
 void Console::keyPressEvent(QKeyEvent *e) {
+    qDebug() << "key : " << e->text().toUtf8();
+
+    if (!this->_alphaChar->exactMatch(e->text())) return;
 
     if (e->matches(QKeySequence::SelectAll) ||
             e->matches(QKeySequence::DeleteEndOfWord) ||
@@ -50,7 +55,9 @@ void Console::keyPressEvent(QKeyEvent *e) {
         this->_cursorPos = this->_buffer.size();
         break;
     case Qt::Key_Down:
-        std::cout << "key down" << std::endl;
+        this->_buffer = this->_historic.last();
+        this->appendHtml(this->_buffer);
+        this->_cursorPos = this->_buffer.size();
         break;
 
     case Qt::Key_Backspace:

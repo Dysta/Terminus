@@ -7,6 +7,7 @@
 #include <QPlainTextEdit>
 #include <QByteArray>
 #include <QPalette>
+#include <QRegExp>
 
 #include <QDebug>
 
@@ -25,9 +26,12 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent *e) override;
 
     QByteArray _buffer;
+    QList<QByteArray> _historic;
     const QString _html = "\r<b><span style='color:green'>Jarvis@u-bdx</span>: <span style='color:blue'>~</span>$ </b>";
 
     InputParser* _parser;
+
+    QRegExp* _alphaChar;
 
     int _cursorPos;
 };
