@@ -27,6 +27,7 @@ void MainWindow::createTerminal(QString title) {
     this->_terminalBox = new QGroupBox(title, this);
 
     this->_console = new Console(this->_terminalBox);
+    this->_console->setGeometry(0, 0, this->width() / 2, this->height());
 
     this->_grid->addWidget(this->_terminalBox);
 }
