@@ -11,8 +11,6 @@ Console::Console(QWidget* parent)
     this->appendHtml(this->_html);
 
     this->_parser = new InputParser();
-
-    this->_alphaChar = new QRegExp("[ A-Za-z0-9\u0008\r]+");
 }
 
 // override function for disable mouse click event
@@ -26,9 +24,7 @@ void Console::mouseDoubleClickEvent(QMouseEvent *e) {
 }
 
 void Console::keyPressEvent(QKeyEvent *e) {
-    qDebug() << "key : " << e->text().toUtf8();
-
-    if (!this->_alphaChar->exactMatch(e->text())) return;
+    qDebug() << "key : " << e->text();
 
     if (e->matches(QKeySequence::SelectAll) ||
             e->matches(QKeySequence::DeleteEndOfWord) ||
@@ -78,8 +74,9 @@ void Console::keyPressEvent(QKeyEvent *e) {
     case Qt::Key_Return:
     case Qt::Key_Enter:
         if (!this->_buffer.isEmpty()) {
-            // appel a parserInputrr
-            this->_historic.append(this->_buffer);
+            this->_parser->parse(this->_buffer);
+            if (!this->_historic.contains(this->_buffer))
+                this->_historic.append(this->_buffer);
             this->_buffer.clear();
             this->_cursorPos = 0;
         }

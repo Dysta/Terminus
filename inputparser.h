@@ -10,7 +10,7 @@ class InputParser
 {
 public:
     InputParser();
-    void parser(QByteArray buffer);
+    void parse(QByteArray buffer);
 
 private:
     QString _cmd;

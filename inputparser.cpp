@@ -2,7 +2,7 @@
 
 InputParser::InputParser(){}
 
-void InputParser::parser(QByteArray buffer){
+void InputParser::parse(QByteArray buffer){
     QByteArray cmd = "";
     QByteArray arg = "";
     bool isArg = false;
@@ -22,4 +22,7 @@ void InputParser::parser(QByteArray buffer){
         }
 
     }
+
+    qDebug() << "cmd :" << cmd;
+    qDebug() << "arg :" << arg;
 }
