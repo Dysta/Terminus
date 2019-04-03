@@ -25,6 +25,7 @@ void Console::mouseDoubleClickEvent(QMouseEvent *e) {
 
 void Console::keyPressEvent(QKeyEvent *e) {
     qDebug() << "key : " << e->text();
+    qDebug() << "key int :" << e->key();
 
     if (e->matches(QKeySequence::SelectAll) ||
             e->matches(QKeySequence::DeleteEndOfWord) ||
