@@ -63,13 +63,13 @@ void Console::keyPressEvent(QKeyEvent *e) {
         break;
 
     case Qt::Key_Backspace:
-        if (this->_buffer.size() > 0 && this->_cursorPos > 0) {
+        if (this->_buffer != _html) {
             this->_buffer.chop(1);
             this->_cursorPos--;
             QPlainTextEdit::keyPressEvent(e);
         }
-
         break;
+
     case Qt::Key_Delete:
         if (this->_buffer.size() > 0) {
             this->_buffer = this->_buffer.remove(this->_cursorPos, 1);
@@ -93,6 +93,9 @@ void Console::keyPressEvent(QKeyEvent *e) {
 
     default:
         QByteArray key(e->text().toStdString().c_str());
+        if(e->key() > 16000000){
+            break;
+        }
         this->_buffer.insert(this->_cursorPos + this->_html.length(), key);
         this->_cursorPos++;
         QPlainTextEdit::keyPressEvent(e);
