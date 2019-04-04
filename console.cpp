@@ -8,7 +8,8 @@ Console::Console(QWidget* parent)
     p.setColor(QPalette::Text, Qt::green);
     this->setPalette(p);
 
-    this->appendHtml(this->_html);
+    this->_buffer.append(this->_html);
+    this->appendHtml(this->_buffer);
 
     this->_parser = new InputParser();
 }
@@ -26,9 +27,11 @@ void Console::mouseDoubleClickEvent(QMouseEvent *e) {
 void Console::keyPressEvent(QKeyEvent *e) {
     qDebug() << "key : " << e->text();
 
-    if (e->matches(QKeySequence::SelectAll) ||
+    if (
+            e->matches(QKeySequence::SelectAll) ||
             e->matches(QKeySequence::DeleteEndOfWord) ||
-            e->matches(QKeySequence::DeleteStartOfWord))
+            e->matches(QKeySequence::DeleteStartOfWord)
+        )
         return;
 
     switch (e->key()) {
@@ -45,10 +48,13 @@ void Console::keyPressEvent(QKeyEvent *e) {
         QPlainTextEdit::keyPressEvent(e);
         break;
     case Qt::Key_Up:
-        if (!this->_buffer.isEmpty()) this->_historic.append(this->_buffer);
+        if (!this->_buffer.isEmpty() && this->_buffer.size() > this->_html.length()) {
+            if (!this->_historic.contains(this->_buffer))
+                this->_historic.append(this->_buffer);
+        }
         this->_buffer = this->_historic.at(this->_historic.size() - 1);
         this->appendHtml(this->_buffer);
-        this->_cursorPos = this->_buffer.size();
+        this->_cursorPos = this->_buffer.size() - this->_html.length() + 1;
         break;
     case Qt::Key_Down:
         this->_buffer = this->_historic.last();
@@ -73,25 +79,29 @@ void Console::keyPressEvent(QKeyEvent *e) {
 
     case Qt::Key_Return:
     case Qt::Key_Enter:
-        if (!this->_buffer.isEmpty()) {
-            this->_parser->parse(this->_buffer);
+        if (!this->_buffer.isEmpty() || this->_buffer.size() > this->_html.length()) {
+            this->_buffer = this->_buffer.trimmed();
+            this->_parser->parse(this->_buffer, this->_html.size());
             if (!this->_historic.contains(this->_buffer))
                 this->_historic.append(this->_buffer);
             this->_buffer.clear();
             this->_cursorPos = 0;
         }
-        this->appendHtml(this->_html);
+        this->_buffer.append(this->_html);
+        this->appendHtml(this->_buffer);
         break;
 
     default:
         QByteArray key(e->text().toStdString().c_str());
-        this->_buffer.insert(this->_cursorPos, key);
+        this->_buffer.insert(this->_cursorPos + this->_html.length(), key);
         this->_cursorPos++;
         QPlainTextEdit::keyPressEvent(e);
         break;
 
     }
 
+    qDebug() << "current buffer :" << this->_buffer;
+    qDebug() << "buffer size: " << this->_buffer.size();
     qDebug() << "current cursor pos: " << this->_cursorPos;
     qDebug() << "historic :" << this->_historic;
 }

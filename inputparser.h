@@ -12,7 +12,7 @@ class InputParser
 {
 public:
     InputParser();
-    void parse(QByteArray buffer);
+    void parse(QByteArray buffer, int htmlSize);
     void launchCommand();
 
 private:

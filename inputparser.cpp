@@ -2,32 +2,33 @@
 
 InputParser::InputParser(){}
 
-void InputParser::parse(QByteArray buffer){
+void InputParser::parse(QByteArray buffer, int htmlSize){
+    QByteArray bufferTmp = buffer.right(buffer.size() - htmlSize);
     QByteArray cmdTmp;
     bool isArg = false;
     bool nextArg = false;
     this->_cmd.clear();
     this->_args.clear();
-    if (!buffer.contains(' ')){
-        this->_cmd = buffer;
+    if (!bufferTmp.contains(' ')){
+        this->_cmd = bufferTmp;
     }
     else {
-        for (int i = 0; i < buffer.size(); i++){
+        for (int i = 0; i < bufferTmp.size(); i++){
             if (!isArg){
-                if (buffer[i] == '-') isArg = true;
-                else if (buffer[i] != ' ') cmdTmp.append(buffer[i]);
+                if (bufferTmp[i] == '-') isArg = true;
+                else if (bufferTmp[i] != ' ') cmdTmp.append(bufferTmp[i]);
             }
             else{
-                if (buffer[i] != '-' && buffer[i] != ' ' && nextArg) {
+                if (bufferTmp[i] != '-' && bufferTmp[i] != ' ' && nextArg) {
                     QByteArray argTmp;
                     argTmp.append('-');
-                    argTmp.append(buffer[i]);
+                    argTmp.append(bufferTmp[i]);
                     this->_args.append(argTmp);
                 }
-                else if (buffer[i] != '-' && buffer[i] != ' ' && !nextArg){
+                else if (bufferTmp[i] != '-' && bufferTmp[i] != ' ' && !nextArg){
                     QByteArray argTmp;
                     argTmp.append('-');
-                    argTmp.append(buffer[i]);
+                    argTmp.append(bufferTmp[i]);
                     nextArg = true;
                     this->_args.append(argTmp);
                 }
