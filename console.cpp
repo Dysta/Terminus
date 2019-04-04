@@ -92,8 +92,6 @@ void Console::keyPressEvent(QKeyEvent *e) {
 
     }
 
-    qDebug() << this->_buffer;
-    qDebug() << "buffer size: " << this->_buffer.size();
     qDebug() << "current cursor pos: " << this->_cursorPos;
     qDebug() << "historic :" << this->_historic;
 }

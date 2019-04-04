@@ -6,15 +6,18 @@
 #include <iostream>
 #include <QDebug>
 
+#include "ls.h"
+
 class InputParser
 {
 public:
     InputParser();
     void parse(QByteArray buffer);
+    void launchCommand();
 
 private:
-    QString _cmd;
-    QList<QString> _args;
+    QByteArray _cmd;
+    QList<QByteArray> _args;
 
 
 };

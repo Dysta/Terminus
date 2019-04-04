@@ -3,26 +3,62 @@
 InputParser::InputParser(){}
 
 void InputParser::parse(QByteArray buffer){
-    QByteArray cmd = "";
-    QByteArray arg = "";
+    QByteArray cmdTmp;
     bool isArg = false;
+    bool nextArg = false;
+    this->_cmd.clear();
+    this->_args.clear();
     if (!buffer.contains(' ')){
         this->_cmd = buffer;
     }
-    for (int i = 0; i < buffer.size(); i++){
-        if (buffer[i] == ' ') isArg = true;
-        else cmd.append(buffer[i]);
-
-        if (isArg){
-            if (buffer[i] != ' ') arg.append(buffer[i]);
+    else {
+        for (int i = 0; i < buffer.size(); i++){
+            if (!isArg){
+                if (buffer[i] == '-') isArg = true;
+                else if (buffer[i] != ' ') cmdTmp.append(buffer[i]);
+            }
             else{
-                this->_args.append(arg);
-                arg.clear();
+                if (buffer[i] != '-' && buffer[i] != ' ' && nextArg) {
+                    QByteArray argTmp;
+                    argTmp.append('-');
+                    argTmp.append(buffer[i]);
+                    this->_args.append(argTmp);
+                }
+                else if (buffer[i] != '-' && buffer[i] != ' ' && !nextArg){
+                    QByteArray argTmp;
+                    argTmp.append('-');
+                    argTmp.append(buffer[i]);
+                    nextArg = true;
+                    this->_args.append(argTmp);
+                }
             }
         }
-
+        if (!cmdTmp.isNull()) this->_cmd = cmdTmp;
     }
 
-    qDebug() << "cmd :" << cmd;
-    qDebug() << "arg :" << arg;
+    this->launchCommand();
+    /*
+    qDebug() << "cmd :" << this->_cmd;
+
+    for (int i = 0; i < this->_args.size(); i++){
+        qDebug() << "arg :" << this->_args[i];
+    }
+    */
+}
+
+void InputParser::launchCommand(){
+
+    if (this->_cmd == "ls"){
+        Ls* ls_command;
+        if (this->_args.isEmpty())
+            ls_command = new Ls();
+        else
+            ls_command = new Ls(this->_args);
+
+        ls_command->command_effect();
+    }
+    else {
+        qDebug() << "unknown command";
+    }
+
 }
