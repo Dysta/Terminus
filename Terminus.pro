@@ -27,13 +27,13 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     console.cpp \
     inputparser.cpp \
-    command.cpp \
-    ls.cpp
+    commands/command.cpp \
+    commands/ls.cpp
 
 HEADERS  += mainwindow.h \
     console.h \
     inputparser.h \
-    ls.h \
-    command.h
+    commands/ls.h \
+    commands/command.h
 
 FORMS    += mainwindow.ui
