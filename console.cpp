@@ -81,7 +81,7 @@ void Console::keyPressEvent(QKeyEvent *e) {
     case Qt::Key_Enter:
         if (!this->_buffer.isEmpty() || this->_buffer.size() > this->_html.length()) {
             this->_buffer = this->_buffer.trimmed();
-            this->_parser->parse(this->_buffer);
+            this->_parser->parse(this->_buffer, this->_html.size());
             if (!this->_historic.contains(this->_buffer))
                 this->_historic.append(this->_buffer);
             this->_buffer.clear();
