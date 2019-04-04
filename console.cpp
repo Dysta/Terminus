@@ -26,7 +26,6 @@ void Console::mouseDoubleClickEvent(QMouseEvent *e) {
 
 void Console::keyPressEvent(QKeyEvent *e) {
     qDebug() << "key : " << e->text();
-    qDebug() << "key int :" << e->key();
 
     if (
             e->matches(QKeySequence::SelectAll) ||
@@ -49,11 +48,13 @@ void Console::keyPressEvent(QKeyEvent *e) {
         QPlainTextEdit::keyPressEvent(e);
         break;
     case Qt::Key_Up:
-        if (!this->_buffer.isEmpty() && this->_buffer.size() > this->_html.length())
-            this->_historic.append(this->_buffer);
+        if (!this->_buffer.isEmpty() && this->_buffer.size() > this->_html.length()) {
+            if (!this->_historic.contains(this->_buffer))
+                this->_historic.append(this->_buffer);
+        }
         this->_buffer = this->_historic.at(this->_historic.size() - 1);
         this->appendHtml(this->_buffer);
-        this->_cursorPos = this->_buffer.size() - this->_html.length();
+        this->_cursorPos = this->_buffer.size() - this->_html.length() + 1;
         break;
     case Qt::Key_Down:
         this->_buffer = this->_historic.last();
@@ -79,6 +80,7 @@ void Console::keyPressEvent(QKeyEvent *e) {
     case Qt::Key_Return:
     case Qt::Key_Enter:
         if (!this->_buffer.isEmpty() || this->_buffer.size() > this->_html.length()) {
+            this->_buffer = this->_buffer.trimmed();
             this->_parser->parse(this->_buffer);
             if (!this->_historic.contains(this->_buffer))
                 this->_historic.append(this->_buffer);
