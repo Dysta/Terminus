@@ -6,7 +6,7 @@
 #include <iostream>
 #include <QDebug>
 
-#include "ls.h"
+#include "commands/ls.h"
 
 class InputParser
 {
@@ -18,7 +18,6 @@ public:
 private:
     QByteArray _cmd;
     QList<QByteArray> _args;
-
 
 };
 

@@ -30,7 +30,8 @@ void Console::keyPressEvent(QKeyEvent *e) {
     if (
             e->matches(QKeySequence::SelectAll) ||
             e->matches(QKeySequence::DeleteEndOfWord) ||
-            e->matches(QKeySequence::DeleteStartOfWord)
+            e->matches(QKeySequence::DeleteStartOfWord) ||
+            e->matches(QKeySequence::Undo)
         )
         return;
 
