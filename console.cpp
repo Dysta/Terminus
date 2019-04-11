@@ -66,17 +66,19 @@ void Console::keyPressEvent(QKeyEvent *e) {
         break;
 
     case Qt::Key_Up:
-        if (!this->_buffer.isEmpty() && this->_buffer.size() > this->_html.length()) {
-            if (!this->_historic.contains(this->_buffer))
-                this->_historic.append(this->_buffer);
-        }
-        this->_buffer = this->_historic.at(this->_historic.size() - 1);
+        if (this->_historic.isEmpty() || this->_historic.isNull()) return;
+        if (this->_buffer == this->_historic) return;
+        this->_buffer = this->_historic;
         this->appendHtml(this->_buffer);
-        this->_cursorPos = this->_buffer.size() - this->_html.length() + 1;
+        this->_cursorPos = this->_buffer.size() - this->_html.size();
         break;
 
     case Qt::Key_Down:
-        this->_buffer = this->_historic.last();
+        if (this->_historic.isEmpty() || this->_historic.isNull()) return;
+        if (this->_buffer == this->_html) return;
+        this->_buffer.clear();
+        this->_buffer.append(this->_html);
+        this->_cursorPos = 0;
         this->appendHtml(this->_buffer);
         this->_cursorPos = this->_buffer.size();
         break;
@@ -98,20 +100,27 @@ void Console::keyPressEvent(QKeyEvent *e) {
 
     case Qt::Key_Return:
     case Qt::Key_Enter:
-        if (!this->_buffer.isEmpty() || this->_buffer.size() > this->_html.length()) {
-            this->_buffer = this->_buffer.trimmed();
+        if (this->_buffer != this->_html) {
             this->_parser->parse(this->_buffer, this->_html.size());
-            if (!this->_historic.contains(this->_buffer))
-                this->_historic.append(this->_buffer);
+            this->_historic = this->_buffer;
             this->_buffer.clear();
             this->_cursorPos = 0;
+            this->_buffer.append(this->_html);
+            this->appendHtml(this->_buffer);
         }
-        this->_buffer.append(this->_html);
-        this->appendHtml(this->_buffer);
         break;
 
     default:
-        if (this->_ctrlPressed) return;
+        if (this->_ctrlPressed){
+            if(e->key() == Qt::Key_L){
+                this->clear();
+                this->_buffer.clear();
+                this->_cursorPos = 0;
+                this->_buffer.append(this->_html);
+                this->appendHtml(this->_buffer);
+            }
+            return;
+        }
         QByteArray key(e->text().toStdString().c_str());
         if(e->key() > 16000000){
             break;
