@@ -110,7 +110,16 @@ void Console::keyPressEvent(QKeyEvent *e) {
         break;
 
     default:
-        if (this->_ctrlPressed) return;
+        if (this->_ctrlPressed){
+            if(e->key() == Qt::Key_L){
+                this->clear();
+                this->_buffer.clear();
+                this->_cursorPos = 0;
+                this->_buffer.append(this->_html);
+                this->appendHtml(this->_buffer);
+            }
+            return;
+        }
         QByteArray key(e->text().toStdString().c_str());
         if(e->key() > 16000000){
             break;
