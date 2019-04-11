@@ -28,12 +28,16 @@ SOURCES += main.cpp\
     console.cpp \
     inputparser.cpp \
     commands/command.cpp \
-    commands/ls.cpp
+    commands/ls.cpp \
+    file.cpp \
+    folder.cpp
 
 HEADERS  += mainwindow.h \
     console.h \
     inputparser.h \
     commands/ls.h \
-    commands/command.h
+    commands/command.h \
+    file.h \
+    folder.h
 
 FORMS    += mainwindow.ui
