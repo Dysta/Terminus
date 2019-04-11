@@ -66,17 +66,17 @@ void Console::keyPressEvent(QKeyEvent *e) {
         break;
 
     case Qt::Key_Up:
-        if (!this->_buffer.isEmpty() && this->_buffer.size() > this->_html.length()) {
-            if (!this->_historic.contains(this->_buffer))
-                this->_historic.append(this->_buffer);
-        }
-        this->_buffer = this->_historic.at(this->_historic.size() - 1);
+        if (this->_historic.isEmpty() || this->_historic.isNull()) return;
+        this->_buffer = this->_historic;
         this->appendHtml(this->_buffer);
         this->_cursorPos = this->_buffer.size() - this->_html.length() + 1;
         break;
 
     case Qt::Key_Down:
-        this->_buffer = this->_historic.last();
+        if (this->_historic.isEmpty() || this->_historic.isNull()) return;
+        this->_buffer.clear();
+        this->_buffer.append(this->_html);
+        this->_cursorPos = 0;
         this->appendHtml(this->_buffer);
         this->_cursorPos = this->_buffer.size();
         break;
@@ -101,8 +101,7 @@ void Console::keyPressEvent(QKeyEvent *e) {
         if (!this->_buffer.isEmpty() || this->_buffer.size() > this->_html.length()) {
             this->_buffer = this->_buffer.trimmed();
             this->_parser->parse(this->_buffer, this->_html.size());
-            if (!this->_historic.contains(this->_buffer))
-                this->_historic.append(this->_buffer);
+            this->_historic = this->_buffer;
             this->_buffer.clear();
             this->_cursorPos = 0;
         }
