@@ -67,9 +67,9 @@ void Console::keyPressEvent(QKeyEvent *e) {
 
     case Qt::Key_Up:
         if (this->_historic.isEmpty() || this->_historic.isNull()) return;
-        this->_buffer = this->_historic;
+        this->_buffer = this->_historic + " ";
         this->appendHtml(this->_buffer);
-        this->_cursorPos = this->_buffer.size() - this->_html.length() + 1;
+        this->_cursorPos = this->_buffer.size() - this->_html.size();
         break;
 
     case Qt::Key_Down:
