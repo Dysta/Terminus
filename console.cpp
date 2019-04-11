@@ -1,4 +1,4 @@
-#include "console.h"
+﻿#include "console.h"
 
 Console::Console(QWidget* parent)
     : QPlainTextEdit(parent), _cursorPos(0), _ctrlPressed(false)
@@ -51,18 +51,20 @@ void Console::keyPressEvent(QKeyEvent *e) {
     case Qt::Key_Control:
         this->_ctrlPressed = true;
         std::cout << "ctrl pressed" << std::endl;
+        break;
 
     case Qt::Key_Left:
         if (this->_cursorPos > 0){
             this->_cursorPos--;
             QPlainTextEdit::keyPressEvent(e);
         }
-
         break;
+
     case Qt::Key_Right:
         if (this->_cursorPos < this->_buffer.size()) this->_cursorPos++;
         QPlainTextEdit::keyPressEvent(e);
         break;
+
     case Qt::Key_Up:
         if (!this->_buffer.isEmpty() && this->_buffer.size() > this->_html.length()) {
             if (!this->_historic.contains(this->_buffer))
@@ -72,6 +74,7 @@ void Console::keyPressEvent(QKeyEvent *e) {
         this->appendHtml(this->_buffer);
         this->_cursorPos = this->_buffer.size() - this->_html.length() + 1;
         break;
+
     case Qt::Key_Down:
         this->_buffer = this->_historic.last();
         this->appendHtml(this->_buffer);
