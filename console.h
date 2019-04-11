@@ -22,6 +22,7 @@ public:
 
 protected:
     void keyPressEvent(QKeyEvent *e) override;
+    void keyReleaseEvent(QKeyEvent *e) override;
     void mousePressEvent(QMouseEvent *e) override;
     void mouseDoubleClickEvent(QMouseEvent *e) override;
 
@@ -32,6 +33,7 @@ protected:
     InputParser* _parser;
 
     int _cursorPos;
+    bool _ctrlPressed;
 };
 
 #endif // CONSOLE_H

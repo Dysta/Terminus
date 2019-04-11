@@ -1,7 +1,7 @@
 #include "console.h"
 
 Console::Console(QWidget* parent)
-    : QPlainTextEdit(parent), _cursorPos(0)
+    : QPlainTextEdit(parent), _cursorPos(0), _ctrlPressed(false)
 {
     QPalette p = palette();
     p.setColor(QPalette::Base, Qt::black);
@@ -24,6 +24,17 @@ void Console::mouseDoubleClickEvent(QMouseEvent *e) {
     Q_UNUSED(e);
 }
 
+void Console::keyReleaseEvent(QKeyEvent *e) {
+    switch (e->key()) {
+    case Qt::Key_Control:
+        this->_ctrlPressed = false;
+        std::cout << "ctrl released" << std::endl;
+        break;
+    default:
+        break;
+    }
+}
+
 void Console::keyPressEvent(QKeyEvent *e) {
     qDebug() << "key : " << e->text();
 
@@ -36,6 +47,10 @@ void Console::keyPressEvent(QKeyEvent *e) {
         return;
 
     switch (e->key()) {
+
+    case Qt::Key_Control:
+        this->_ctrlPressed = true;
+        std::cout << "ctrl pressed" << std::endl;
 
     case Qt::Key_Left:
         if (this->_cursorPos > 0){
@@ -64,7 +79,7 @@ void Console::keyPressEvent(QKeyEvent *e) {
         break;
 
     case Qt::Key_Backspace:
-        if (this->_buffer != _html) {
+        if (this->_buffer != _html && this->_cursorPos > 0) {
             this->_buffer.chop(1);
             this->_cursorPos--;
             QPlainTextEdit::keyPressEvent(e);
@@ -93,6 +108,7 @@ void Console::keyPressEvent(QKeyEvent *e) {
         break;
 
     default:
+        if (this->_ctrlPressed) return;
         QByteArray key(e->text().toStdString().c_str());
         if(e->key() > 16000000){
             break;
