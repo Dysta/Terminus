@@ -8,4 +8,4 @@ Command::Command(QList<QByteArray> args){
 
 Command::~Command(){}
 
-void Command::command_effect(){}
+void Command::command_effect(Folder* f){}

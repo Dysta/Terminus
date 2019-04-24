@@ -6,13 +6,16 @@
 #include <iostream>
 #include <QDebug>
 
+#include "folder.h"
+#include "file.h"
+
 class Command
 {
 public:
     Command();
     Command(QList<QByteArray> args);
     virtual ~Command();
-    virtual void command_effect();
+    virtual void command_effect(Folder *f);
 
 private:
     QList<QByteArray> _args;

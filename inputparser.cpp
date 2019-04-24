@@ -2,7 +2,7 @@
 
 InputParser::InputParser(){}
 
-void InputParser::parse(QByteArray buffer, int htmlSize){
+void InputParser::parse(QByteArray buffer, int htmlSize, Folder *currendFolder){
     QByteArray bufferTmp = buffer.right(buffer.size() - htmlSize);
     QByteArray cmdTmp;
     bool isArg = false;
@@ -37,7 +37,7 @@ void InputParser::parse(QByteArray buffer, int htmlSize){
         if (!cmdTmp.isNull()) this->_cmd = cmdTmp;
     }
 
-    this->launchCommand();
+    this->launchCommand(currendFolder);
     /*
     qDebug() << "cmd :" << this->_cmd;
 
@@ -47,7 +47,7 @@ void InputParser::parse(QByteArray buffer, int htmlSize){
     */
 }
 
-void InputParser::launchCommand(){
+void InputParser::launchCommand(Folder *currentFolder){
 
     if (this->_cmd == "ls"){
         Ls* ls_command;
@@ -56,7 +56,16 @@ void InputParser::launchCommand(){
         else
             ls_command = new Ls(this->_args);
 
-        ls_command->command_effect();
+        ls_command->command_effect(currentFolder);
+    }
+    else if (this->_cmd == "cd"){
+        Cd *cd_command;
+        if (this->_args.isEmpty())
+            cd_command = new Cd();
+        else
+            cd_command = new Cd(this->_args);
+
+        cd_command->command_effect(currentFolder);
     }
     else {
         qDebug() << "unknown command";

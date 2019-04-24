@@ -11,9 +11,12 @@ class File
 public:
     File(QString name, QString content);
     QString toString();
+    QString getName() const;
+    QString getContent() const;
+
 private:
-    QString name;
-    QString content;
+    QString _name;
+    QString _content;
 };
 
 #endif // FILE_H

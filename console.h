@@ -12,13 +12,14 @@
 #include <QDebug>
 
 #include "inputparser.h"
+#include "folder.h"
 
 class Console : public QPlainTextEdit
 {
     Q_OBJECT
 
 public:
-    Console(QWidget* parent = nullptr);
+    Console(QWidget *parent = nullptr);
 
 protected:
     void keyPressEvent(QKeyEvent *e) override;
@@ -30,7 +31,10 @@ protected:
     QByteArray _historic;
     const QString _html = "<b><span style='color:green'>Jarvis@u-bdx</span>: <span style='color:blue'>~</span>$</b> ";
 
-    InputParser* _parser;
+    InputParser *_parser;
+
+    QList<Folder *> _folders;
+    Folder *_currentFolder;
 
     int _cursorPos;
     bool _ctrlPressed;

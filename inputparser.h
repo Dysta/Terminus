@@ -7,13 +7,15 @@
 #include <QDebug>
 
 #include "commands/ls.h"
+#include "commands/cd.h"
+#include "folder.h"
 
 class InputParser
 {
 public:
     InputParser();
-    void parse(QByteArray buffer, int htmlSize);
-    void launchCommand();
+    void parse(QByteArray buffer, int htmlSize, Folder *currentFolder);
+    void launchCommand(Folder *currentFolder);
 
 private:
     QByteArray _cmd;
