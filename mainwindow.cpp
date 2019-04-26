@@ -71,7 +71,7 @@ void MainWindow::setCmd(Command *cmd)
 {
     _cmd = cmd;
     if (_cmd == nullptr) return;
-    _cmd->command_effect(this->_user->currentFolder());
+    _cmd->command_effect(this->_user, this->_user->currentFolder());
 }
 
 

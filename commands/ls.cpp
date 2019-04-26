@@ -7,7 +7,8 @@ Ls::Ls()
 Ls::Ls(QList<QByteArray> args)
     : Command(args) {}
 
-void Ls::command_effect(Folder *f){
+void Ls::command_effect(User* user, Folder *f){
+    Q_UNUSED(user);
     qDebug() << "Commande LS lancée !\n";
     qDebug() << "Dossiers : \n";
     for (int i = 0; i < f->children().size(); i++){

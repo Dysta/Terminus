@@ -50,7 +50,8 @@ void InputParser::parse(QByteArray buffer, int htmlSize){
 }
 
 void InputParser::prepareCommand(){
-
+    if (_cmd.isNull() || _cmd.isEmpty()) return;
+    this->_command = nullptr;
     if (this->_cmd == "ls"){
         if (this->_args.isEmpty())
             this->_command = new Ls();
@@ -58,12 +59,11 @@ void InputParser::prepareCommand(){
             this->_command = new Ls(this->_args);
     }
     else if (this->_cmd == "cd"){
-        if (this->_args.isEmpty())
-            this->_command = new Cd();
-        else
+        if (!this->_args.isEmpty())
             this->_command = new Cd(this->_args);
+        else
+            qDebug() << "aucun arg";
     } else {
-        this->_command = nullptr;
         qDebug() << "unknow command";
     }
 

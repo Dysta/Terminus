@@ -6,6 +6,7 @@
 #include <iostream>
 #include <QDebug>
 
+#include "user.h"
 #include "folder.h"
 #include "file.h"
 
@@ -15,9 +16,9 @@ public:
     Command();
     Command(QList<QByteArray> args);
     virtual ~Command();
-    virtual void command_effect(Folder *f) = 0;
+    virtual void command_effect(User* user, Folder *f) = 0;
 
-private:
+protected:
     QList<QByteArray> _args;
 
 };
