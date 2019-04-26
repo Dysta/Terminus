@@ -31,7 +31,8 @@ SOURCES += main.cpp\
     commands/command.cpp \
     commands/ls.cpp \
     file.cpp \
-    folder.cpp
+    folder.cpp \
+    user.cpp
 
 HEADERS  += mainwindow.h \
     commands/cd.h \
@@ -40,6 +41,7 @@ HEADERS  += mainwindow.h \
     commands/ls.h \
     commands/command.h \
     file.h \
-    folder.h
+    folder.h \
+    user.h
 
 FORMS    += mainwindow.ui

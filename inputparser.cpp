@@ -1,8 +1,10 @@
 #include "inputparser.h"
 
-InputParser::InputParser(){}
+InputParser::InputParser() {
 
-void InputParser::parse(QByteArray buffer, int htmlSize, Folder *currendFolder){
+}
+
+void InputParser::parse(QByteArray buffer, int htmlSize){
     QByteArray bufferTmp = buffer.right(buffer.size() - htmlSize);
     QByteArray cmdTmp;
     bool isArg = false;
@@ -37,7 +39,7 @@ void InputParser::parse(QByteArray buffer, int htmlSize, Folder *currendFolder){
         if (!cmdTmp.isNull()) this->_cmd = cmdTmp;
     }
 
-    this->launchCommand(currendFolder);
+    this->prepareCommand();
     /*
     qDebug() << "cmd :" << this->_cmd;
 
@@ -47,28 +49,27 @@ void InputParser::parse(QByteArray buffer, int htmlSize, Folder *currendFolder){
     */
 }
 
-void InputParser::launchCommand(Folder *currentFolder){
+void InputParser::prepareCommand(){
 
     if (this->_cmd == "ls"){
-        Ls* ls_command;
         if (this->_args.isEmpty())
-            ls_command = new Ls();
+            this->_command = new Ls();
         else
-            ls_command = new Ls(this->_args);
-
-        ls_command->command_effect(currentFolder);
+            this->_command = new Ls(this->_args);
     }
     else if (this->_cmd == "cd"){
-        Cd *cd_command;
         if (this->_args.isEmpty())
-            cd_command = new Cd();
+            this->_command = new Cd();
         else
-            cd_command = new Cd(this->_args);
-
-        cd_command->command_effect(currentFolder);
-    }
-    else {
-        qDebug() << "unknown command";
+            this->_command = new Cd(this->_args);
+    } else {
+        this->_command = nullptr;
+        qDebug() << "unknow command";
     }
 
+}
+
+Command *InputParser::getCommand() const
+{
+    return _command;
 }

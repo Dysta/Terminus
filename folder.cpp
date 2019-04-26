@@ -1,9 +1,9 @@
 #include "folder.h"
 
-Folder::Folder(QString name, Folder* parent)
+Folder::Folder(QString name, Folder* parent) :
+    _name(name), _parent(parent)
 {
-    this->_name = name;
-    this->_parent = parent;
+
 }
 
 QList<Folder *> Folder::children() const

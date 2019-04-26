@@ -1,9 +1,9 @@
 #include "file.h"
 
-File::File(QString name, QString content)
+File::File(QString name, QString content) :
+    _name(name), _content(content)
 {
-    this->_name = name;
-    this->_content = content;
+
 }
 
 QString File::toString(){

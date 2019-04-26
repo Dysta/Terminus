@@ -1,8 +1,10 @@
 ﻿#include "console.h"
+#include "mainwindow.h"
 
 Console::Console(QWidget* parent)
     : QPlainTextEdit(parent), _cursorPos(0), _ctrlPressed(false)
 {
+    this->_mw = qobject_cast<MainWindow*>(parent);
     QPalette p = palette();
     p.setColor(QPalette::Base, Qt::black);
     p.setColor(QPalette::Text, Qt::green);
@@ -12,25 +14,6 @@ Console::Console(QWidget* parent)
     this->appendHtml(this->_buffer);
 
     this->_parser = new InputParser();
-
-    //Ijnitialization of path
-    Folder *f1 = new Folder("room_1");
-    Folder *f2 = new Folder("room_2", f1);
-    f1->addChild(f2);
-    Folder *f3 = new Folder("room_3", f1);
-    f1->addChild(f3);
-    Folder *f4 = new Folder("room_4", f2);
-    f2->addChild(f4);
-
-    File *fi1 = new File("file1", "fichier de la room_1");
-    File *fi2 = new File("file2", "fichier de la room_2");
-    File *fi3 = new File("file3", "fichier de la room_3");
-    File *fi4 = new File("file4", "fichier de la room_4");
-    f1->addFile(fi1);
-    f2->addFile(fi2);
-    f3->addFile(fi3);
-    f4->addFile(fi4);
-    this->_currentFolder = f1;
 }
 
 // override function for disable mouse click event
@@ -120,7 +103,8 @@ void Console::keyPressEvent(QKeyEvent *e) {
     case Qt::Key_Return:
     case Qt::Key_Enter:
         if (this->_buffer != this->_html) {
-            this->_parser->parse(this->_buffer, this->_html.size(), this->_currentFolder);
+            this->_parser->parse(this->_buffer, this->_html.size());
+            this->_mw->setCmd(this->_parser->getCommand());
             this->_historic = this->_buffer;
             this->_buffer.clear();
             this->_cursorPos = 0;
@@ -141,9 +125,8 @@ void Console::keyPressEvent(QKeyEvent *e) {
             return;
         }
         QByteArray key(e->text().toStdString().c_str());
-        if(e->key() > 16000000){
-            break;
-        }
+        if(e->key() > 16000000) break;
+
         this->_buffer.insert(this->_cursorPos + this->_html.length(), key);
         this->_cursorPos++;
         QPlainTextEdit::keyPressEvent(e);

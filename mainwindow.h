@@ -9,7 +9,11 @@
 
 #include <iostream>
 
+#include "commands/command.h"
 #include "console.h"
+#include "folder.h"
+#include "file.h"
+#include "user.h"
 
 namespace Ui {
 class MainWindow;
@@ -23,10 +27,13 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void setCmd(Command *cmd);
+
 private:
     void createTerminal();
     void createMissionBox(const QString& title);
     void createBox(const QString& title);
+    void createTree(void);
 
     Ui::MainWindow *ui;
 
@@ -34,9 +41,14 @@ private:
     QGridLayout* _grid;
 
     Console* _console;
+    Command* _cmd;
 
     QGroupBox* _missionBox;
     QGroupBox* _box;
+
+    Folder* _tree;
+
+    User* _user;
 
 };
 

@@ -6,20 +6,23 @@
 #include <iostream>
 #include <QDebug>
 
-#include "commands/ls.h"
+#include "commands/command.h"
 #include "commands/cd.h"
-#include "folder.h"
+#include "commands/ls.h"
 
 class InputParser
 {
 public:
     InputParser();
-    void parse(QByteArray buffer, int htmlSize, Folder *currentFolder);
-    void launchCommand(Folder *currentFolder);
+    void parse(QByteArray buffer, int htmlSize);
+    void prepareCommand();
 
+    Command *getCommand() const;
 private:
     QByteArray _cmd;
     QList<QByteArray> _args;
+
+    Command* _command;
 
 };
 

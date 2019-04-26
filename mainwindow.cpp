@@ -7,10 +7,13 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("Terminus 2k19");
+    this->setMinimumSize(QSize(1000, 600));
 
     this->_mainWidget = new QWidget(this);
     this->_grid = new QGridLayout(this);
+    this->_user = new User();
 
+    this->createTree();
     this->createTerminal();
     this->createMissionBox("Missions");
     this->createBox("Box");
@@ -32,12 +35,43 @@ void MainWindow::createTerminal() {
 
 void MainWindow::createMissionBox(const QString &title) {
     this->_missionBox = new QGroupBox(title, this);
+    this->_missionBox->setMinimumSize(QSize(400, 300));
     this->_grid->addWidget(this->_missionBox, 0, 1);
 }
 
 void MainWindow::createBox(const QString &title) {
     this->_box = new QGroupBox(title, this);
+    this->_box->setMinimumSize(QSize(400, 300));
     this->_grid->addWidget(this->_box, 1, 1);
+}
+
+void MainWindow::createTree() {
+    this->_tree = new Folder("home");
+    Folder *f1 = new Folder("room_1", this->_tree);
+    Folder *f2 = new Folder("room_2", f1);
+    Folder *f3 = new Folder("room_3", f1);
+    Folder *f4 = new Folder("room_4", f2);
+    this->_tree->addChild(f1);
+    f1->addChild(f3);
+    f1->addChild(f2);
+    f2->addChild(f4);
+
+    File *fi1 = new File("file1", "fichier de la room_1");
+    File *fi2 = new File("file2", "fichier de la room_2");
+    File *fi3 = new File("file3", "fichier de la room_3");
+    File *fi4 = new File("file4", "fichier de la room_4");
+    f1->addFile(fi1);
+    f2->addFile(fi2);
+    f3->addFile(fi3);
+    f4->addFile(fi4);
+    this->_user->setCurrentFolder(this->_tree);
+}
+
+void MainWindow::setCmd(Command *cmd)
+{
+    _cmd = cmd;
+    if (_cmd == nullptr) return;
+    _cmd->command_effect(this->_user->currentFolder());
 }
 
 

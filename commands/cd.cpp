@@ -1,6 +1,7 @@
 #include "cd.h"
 
-Cd::Cd(): Command(){}
+Cd::Cd() :
+    Command(){}
 
 Cd::Cd(QList<QByteArray> args)
     : Command(args) {}

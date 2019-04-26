@@ -14,6 +14,8 @@
 #include "inputparser.h"
 #include "folder.h"
 
+class MainWindow;
+
 class Console : public QPlainTextEdit
 {
     Q_OBJECT
@@ -26,6 +28,8 @@ protected:
     void keyReleaseEvent(QKeyEvent *e) override;
     void mousePressEvent(QMouseEvent *e) override;
     void mouseDoubleClickEvent(QMouseEvent *e) override;
+
+    MainWindow* _mw;
 
     QByteArray _buffer;
     QByteArray _historic;
