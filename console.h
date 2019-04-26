@@ -33,7 +33,6 @@ protected:
 
     QByteArray _buffer;
     QByteArray _historic;
-    const QString _html = "<b><span style='color:green'>Jarvis@u-bdx</span>: <span style='color:blue'>~</span>$</b> ";
 
     InputParser *_parser;
 

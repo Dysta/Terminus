@@ -29,6 +29,8 @@ public:
 
     void setCmd(Command *cmd);
 
+    QString html() const;
+
 private:
     void createTerminal();
     void createMissionBox(const QString& title);
@@ -39,6 +41,7 @@ private:
 
     QWidget* _mainWidget;
     QGridLayout* _grid;
+    QString _html = "<b><span style='color:green'>Jarvis@u-bdx</span>: <span style='color:blue'>~</span> $</b> ";
 
     Console* _console;
     Command* _cmd;

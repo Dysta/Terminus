@@ -10,7 +10,7 @@ Console::Console(QWidget* parent)
     p.setColor(QPalette::Text, Qt::green);
     this->setPalette(p);
 
-    this->_buffer.append(this->_html);
+    this->_buffer.append(this->_mw->html());
     this->appendHtml(this->_buffer);
 
     this->_parser = new InputParser();
@@ -72,21 +72,21 @@ void Console::keyPressEvent(QKeyEvent *e) {
         if (this->_buffer == this->_historic) return;
         this->_buffer = this->_historic;
         this->appendHtml(this->_buffer);
-        this->_cursorPos = this->_buffer.size() - this->_html.size();
+        this->_cursorPos = this->_buffer.size() - this->_mw->html().size();
         break;
 
     case Qt::Key_Down:
         if (this->_historic.isEmpty() || this->_historic.isNull()) return;
-        if (this->_buffer == this->_html) return;
+        if (this->_buffer == this->_mw->html()) return;
         this->_buffer.clear();
-        this->_buffer.append(this->_html);
+        this->_buffer.append(this->_mw->html());
         this->_cursorPos = 0;
         this->appendHtml(this->_buffer);
         this->_cursorPos = this->_buffer.size();
         break;
 
     case Qt::Key_Backspace:
-        if (this->_buffer != _html && this->_cursorPos > 0) {
+        if (this->_buffer != this->_mw->html() && this->_cursorPos > 0) {
             this->_buffer.chop(1);
             this->_cursorPos--;
             QPlainTextEdit::keyPressEvent(e);
@@ -102,13 +102,13 @@ void Console::keyPressEvent(QKeyEvent *e) {
 
     case Qt::Key_Return:
     case Qt::Key_Enter:
-        if (this->_buffer != this->_html) {
-            this->_parser->parse(this->_buffer, this->_html.size());
+        if (this->_buffer != this->_mw->html()) {
+            this->_parser->parse(this->_buffer, this->_mw->html().size());
             this->_mw->setCmd(this->_parser->getCommand());
             this->_historic = this->_buffer;
             this->_buffer.clear();
             this->_cursorPos = 0;
-            this->_buffer.append(this->_html);
+            this->_buffer.append(this->_mw->html());
             this->appendHtml(this->_buffer);
         }
         break;
@@ -119,7 +119,7 @@ void Console::keyPressEvent(QKeyEvent *e) {
                 this->clear();
                 this->_buffer.clear();
                 this->_cursorPos = 0;
-                this->_buffer.append(this->_html);
+                this->_buffer.append(this->_mw->html());
                 this->appendHtml(this->_buffer);
             }
             return;
@@ -127,7 +127,7 @@ void Console::keyPressEvent(QKeyEvent *e) {
         QByteArray key(e->text().toStdString().c_str());
         if(e->key() > 16000000) break;
 
-        this->_buffer.insert(this->_cursorPos + this->_html.length(), key);
+        this->_buffer.insert(this->_cursorPos + this->_mw->html().length(), key);
         this->_cursorPos++;
         QPlainTextEdit::keyPressEvent(e);
         break;

@@ -65,6 +65,12 @@ void MainWindow::createTree() {
     f3->addFile(fi3);
     f4->addFile(fi4);
     this->_user->setCurrentFolder(this->_tree);
+    this->_html.replace("~", this->_user->currentFolder()->getName());
+}
+
+QString MainWindow::html() const
+{
+    return _html;
 }
 
 void MainWindow::setCmd(Command *cmd)
@@ -72,6 +78,7 @@ void MainWindow::setCmd(Command *cmd)
     _cmd = cmd;
     if (_cmd == nullptr) return;
     _cmd->command_effect(this->_user, this->_user->currentFolder());
+    this->_html.replace("~", this->_user->currentFolder()->getName());
 }
 
 
