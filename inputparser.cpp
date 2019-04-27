@@ -7,46 +7,63 @@ InputParser::InputParser() {
 void InputParser::parse(QByteArray buffer, int htmlSize){
     QByteArray bufferTmp = buffer.right(buffer.size() - htmlSize);
     QByteArray cmdTmp;
+    QByteArray argTmp;
     bool isArg = false;
     bool nextArg = false;
+    bool isFlag = false;
     this->_cmd.clear();
     this->_args.clear();
+    this->_flags.clear();
+
     if (!bufferTmp.contains(' ')){
         this->_cmd = bufferTmp;
     }
     else {
         for (int i = 0; i < bufferTmp.size(); i++){
-            if (!isArg){
-                if (bufferTmp[i] == '-') isArg = true;
-                else if (bufferTmp[i] != ' ') cmdTmp.append(bufferTmp[i]);
+            if (bufferTmp[i] == ' ' && !isArg) isArg = true;
+            if (bufferTmp[i] == '-' && !isFlag){
+                isArg = false;
+                isFlag = true;
             }
-            else{
-                if (bufferTmp[i] != '-' && bufferTmp[i] != ' ' && nextArg) {
-                    QByteArray argTmp;
-                    argTmp.append('-');
-                    argTmp.append(bufferTmp[i]);
-                    this->_args.append(argTmp);
-                }
-                else if (bufferTmp[i] != '-' && bufferTmp[i] != ' ' && !nextArg){
-                    QByteArray argTmp;
-                    argTmp.append('-');
-                    argTmp.append(bufferTmp[i]);
-                    nextArg = true;
-                    this->_args.append(argTmp);
-                }
+            if (!isArg && !isFlag){
+                cmdTmp.append(bufferTmp[i]);
             }
+
+
+            if (isArg){
+                if (bufferTmp[i] != ' '){
+                    argTmp.append(bufferTmp[i]);
+                }
+
+                if ((i == bufferTmp.length() - 1 || bufferTmp[i] == ' ') && !argTmp.isEmpty()){
+                    this->_args.append(argTmp);
+                    argTmp.clear();
+                }
+
+            }
+            else if (isFlag && bufferTmp[i] != '-') {
+                QByteArray flagTmp;
+                flagTmp.append('-');
+                flagTmp.append(bufferTmp[i]);
+                this->_flags.append(flagTmp);
+            }
+
+
         }
         if (!cmdTmp.isNull()) this->_cmd = cmdTmp;
     }
 
     this->prepareCommand();
-    /*
+
     qDebug() << "cmd :" << this->_cmd;
 
+    for (int i = 0; i < this->_flags.size(); i++){
+        qDebug() << "flag :" << this->_flags[i];
+    }
     for (int i = 0; i < this->_args.size(); i++){
         qDebug() << "arg :" << this->_args[i];
     }
-    */
+
 }
 
 void InputParser::prepareCommand(){

@@ -21,6 +21,7 @@ public:
 private:
     QByteArray _cmd;
     QList<QByteArray> _args;
+    QList<QByteArray> _flags;
 
     Command* _command;
 
