@@ -6,6 +6,8 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QGroupBox>
+#include <QProgressBar>
+#include <QLabel>
 
 #include <iostream>
 
@@ -35,7 +37,7 @@ public:
 private:
     void createTerminal();
     void createMissionBox(const QString& title);
-    void createBox(const QString& title);
+    void createPictureBox(const QString& title);
     void createTree(void);
     void launchCommand();
 
@@ -49,7 +51,7 @@ private:
     Command* _cmd;
 
     QGroupBox* _missionBox;
-    QGroupBox* _box;
+    QGroupBox* _pictureBox;
 
     Folder* _tree;
 

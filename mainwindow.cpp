@@ -10,13 +10,13 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setMinimumSize(QSize(1000, 600));
 
     this->_mainWidget = new QWidget(this);
-    this->_grid = new QGridLayout(this);
+    this->_grid = new QGridLayout();
     this->_user = new User();
 
     this->createTree();
     this->createTerminal();
     this->createMissionBox("Missions");
-    this->createBox("Box");
+    this->createPictureBox("Lieu");
 
     this->_mainWidget->setLayout(this->_grid);
     this->setCentralWidget(this->_mainWidget);
@@ -35,14 +35,14 @@ void MainWindow::createTerminal() {
 
 void MainWindow::createMissionBox(const QString &title) {
     this->_missionBox = new QGroupBox(title, this);
-    this->_missionBox->setMinimumSize(QSize(400, 300));
+    this->_missionBox->setMinimumSize(QSize(400, 250));
     this->_grid->addWidget(this->_missionBox, 0, 1);
 }
 
-void MainWindow::createBox(const QString &title) {
-    this->_box = new QGroupBox(title, this);
-    this->_box->setMinimumSize(QSize(400, 300));
-    this->_grid->addWidget(this->_box, 1, 1);
+void MainWindow::createPictureBox(const QString &title) {
+    this->_pictureBox = new QGroupBox(title, this);
+    this->_pictureBox->setMinimumSize(QSize(400, 250));
+    this->_grid->addWidget(this->_pictureBox, 1, 1);
 }
 
 void MainWindow::createTree() {
