@@ -6,8 +6,9 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QGroupBox>
-#include <QProgressBar>
-#include <QLabel>
+#include <QProgressBar> //
+#include <QLabel> //
+#include <QInputDialog>
 
 #include <iostream>
 
@@ -35,6 +36,7 @@ public:
     QString html() const;
 
 private:
+    void askName();
     void createTerminal();
     void createMissionBox(const QString& title);
     void createPictureBox(const QString& title);

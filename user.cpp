@@ -1,6 +1,7 @@
 #include "user.h"
 
 User::User()
+    : _name("Jarvis")
 {
 
 }
@@ -19,4 +20,14 @@ Folder *User::currentFolder() const
 void User::setCurrentFolder(Folder *currentFolder)
 {
     _currentFolder = currentFolder;
+}
+
+QString User::name() const
+{
+    return _name;
+}
+
+void User::setName(const QString &name)
+{
+    _name = name;
 }

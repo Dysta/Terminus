@@ -16,6 +16,9 @@ public:
     Folder *currentFolder() const;
     void setCurrentFolder(Folder *currentFolder);
 
+    QString name() const;
+    void setName(const QString &name);
+
 private:
     QString _name;
 

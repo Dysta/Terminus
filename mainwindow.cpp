@@ -20,11 +20,21 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->_mainWidget->setLayout(this->_grid);
     this->setCentralWidget(this->_mainWidget);
+
+//   this->askName();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::askName() {
+    QString name = QInputDialog::getText(this, "Choisir nom", "nom");
+    if (!name.isEmpty()){
+        this->_user->setName(name);
+        this->_html.replace("Jarvis", this->_user->name());
+    }
 }
 
 void MainWindow::createTerminal() {
