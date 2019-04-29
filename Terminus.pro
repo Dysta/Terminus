@@ -36,7 +36,8 @@ SOURCES += main.cpp\
     color.cpp \
     commands/cat.cpp \
     commands/echo.cpp \
-    commands/chmod.cpp
+    commands/chmod.cpp \
+    commands/man.cpp
 
 HEADERS  += mainwindow.h \
     commands/cd.h \
@@ -50,6 +51,7 @@ HEADERS  += mainwindow.h \
     color.h \
     commands/cat.h \
     commands/echo.h \
-    commands/chmod.h
+    commands/chmod.h \
+    commands/man.h
 
 FORMS    += mainwindow.ui

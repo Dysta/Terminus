@@ -80,18 +80,26 @@ void InputParser::prepareCommand(){
             this->_command = new Cd(this->_args);
         else
             this->_command = new Cd();
-    } else if (this->_cmd == "exit") {
+    }
+    else if (this->_cmd == "exit") {
         qDebug() << "exit cmd : close windows";
 
-    } else if (this->_cmd == "cat") {
+    }
+    else if (this->_cmd == "cat") {
         if (!this->_args.isEmpty())
             this->_command = new Cat(this->_args);
-    } else if (this->_cmd == "chmod") {
+    }
+    else if (this->_cmd == "chmod") {
         if (!this->_args.isEmpty())
             this->_command = new Chmod(this->_flags);
-    } else if (this->_cmd == "echo") {
+    }
+    else if (this->_cmd == "echo") {
         this->_command = new Echo(this->_args);
-    } else {
+    }
+    else if (this->_cmd == "man") {
+        this->_command = new Man(this->_args);
+    }
+    else {
         qDebug() << "unknow command";
     }
 
