@@ -1,15 +1,15 @@
-#ifndef CAT_H
-#define CAT_H
+#ifndef CHMOD_H
+#define CHMOD_H
 
 #include "commands/command.h"
 #include "user.h"
 
-class Cat : public Command
+class Chmod : public Command
 {
 public:
-    Cat();
-    Cat(QList<QByteArray>);
+    Chmod();
+    Chmod(QList<QByteArray>(args));
     void command_effect(Console* console, User* user) override;
 };
 
-#endif // CAT_H
+#endif // CHMOD_H

@@ -37,6 +37,7 @@ private:
     void createMissionBox(const QString& title);
     void createBox(const QString& title);
     void createTree(void);
+    void launchCommand();
 
     Ui::MainWindow *ui;
 

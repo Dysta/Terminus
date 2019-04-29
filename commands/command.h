@@ -18,7 +18,7 @@ public:
     Command();
     Command(QList<QByteArray> args);
     virtual ~Command();
-    virtual void command_effect(Console* console, User* user, Folder *f) = 0;
+    virtual void command_effect(Console* console, User* user) = 0;
 
 protected:
     QList<QByteArray> _args;

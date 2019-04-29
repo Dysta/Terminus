@@ -7,7 +7,7 @@ Cd::Cd() :
 Cd::Cd(QList<QByteArray> args)
     : Command(args) {}
 
-void Cd::command_effect(Console* console, User* user, Folder *f){
+void Cd::command_effect(Console* console, User* user){
     qDebug() << "Commande CD lancée !\n";
     qDebug() << this->_args;
 
@@ -23,7 +23,7 @@ void Cd::command_effect(Console* console, User* user, Folder *f){
         return;
     }
 
-    for (Folder* fo : f->children()) {
+    for (Folder* fo : user->currentFolder()->children()) {
         if (fo->getName() == QString(this->_args.first())) {
             user->setCurrentFolder(fo);
             return;

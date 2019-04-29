@@ -9,8 +9,7 @@ Cat::Cat()
 Cat::Cat(QList<QByteArray> args)
     : Command(args) {}
 
-void Cat::command_effect(Console *console, User *user, Folder *folder) {
-    Q_UNUSED(folder);
+void Cat::command_effect(Console *console, User *user) {
 
     if (this->_args.isEmpty()) {
         console->appendHtml("Aucun fichier ou dossier de ce type");

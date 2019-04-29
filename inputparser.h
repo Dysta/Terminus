@@ -11,6 +11,7 @@
 #include "commands/ls.h"
 #include "commands/cat.h"
 #include "commands/echo.h"
+#include "commands/chmod.h"
 
 class InputParser
 {

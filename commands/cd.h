@@ -9,7 +9,7 @@ class Cd : public Command
 public:
     Cd();
     Cd(QList<QByteArray>);
-    void command_effect(Console* console, User* user, Folder *f) override;
+    void command_effect(Console* console, User* user) override;
 };
 
 #endif // CD_H

@@ -9,14 +9,26 @@
 class File
 {
 public:
-    File(QString name, QString content);
+    enum Mode {
+        RD_ONLY,
+        WR_ONLY,
+        EX_ONLY,
+        RW,
+        XRW
+    };
+
+    File(QString name, QString content, int mode);
     QString toString();
     QString getName() const;
     QString getContent() const;
+    int getMode() const;
+    void setMode(int mode);
 
 private:
+
     QString _name;
     QString _content;
+    int _mode;
 };
 
 #endif // FILE_H

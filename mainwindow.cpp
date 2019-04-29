@@ -57,14 +57,14 @@ void MainWindow::createTree() {
     f1->addChild(f2);
     f2->addChild(f4);
 
-    File *fi1 = new File("file1", "fichier de la room_1");
-    File *fi2 = new File("file2", "fichier de la room_2");
-    File *fi3 = new File("file3", "fichier de la room_3");
-    File *fi4 = new File("file4", "fichier de la room_4");
+    File *fi1 = new File("file1", "fichier de la room_1", File::Mode::EX_ONLY);
+    File *fi2 = new File("file2", "fichier de la room_2", File::Mode::RD_ONLY);
+    File *fi3 = new File("file3", "fichier de la room_3", File::Mode::XRW);
+    File *fi4 = new File("file4", "fichier de la room_4", File::Mode::RW);
     f1->addFile(fi1);
-    f2->addFile(fi2);
-    f3->addFile(fi3);
-    f4->addFile(fi4);
+    f1->addFile(fi2);
+    f1->addFile(fi3);
+    f1->addFile(fi4);
     this->_user->setCurrentFolder(this->_tree);
     this->_html.replace("~", this->_user->currentFolder()->getName());
 }
@@ -77,9 +77,14 @@ QString MainWindow::html() const
 void MainWindow::setCmd(Command *cmd)
 {
     _cmd = cmd;
+    this->launchCommand();
+}
+
+void MainWindow::launchCommand() {
     if (_cmd == nullptr) return;
-    _cmd->command_effect(this->_console, this->_user, this->_user->currentFolder());
+    _cmd->command_effect(this->_console, this->_user);
     this->_html.replace(QRegExp(">[a-z0-9~_]{1,}<"), ">" + this->_user->currentFolder()->getName() + "<");
+    delete _cmd;
 }
 
 
