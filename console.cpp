@@ -63,7 +63,7 @@ void Console::keyPressEvent(QKeyEvent *e) {
         break;
 
     case Qt::Key_Right:
-        if (this->_cursorPos < this->_buffer.size() ) this->_cursorPos++;
+        if (this->_cursorPos < this->_buffer.size() - this->_mw->html().size() ) this->_cursorPos++;
         QPlainTextEdit::keyPressEvent(e);
         break;
 
