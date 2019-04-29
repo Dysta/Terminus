@@ -9,11 +9,9 @@ void InputParser::parse(QByteArray buffer, int htmlSize){
     QByteArray cmdTmp;
     QByteArray argTmp;
     bool isArg = false;
-    bool nextArg = false;
     bool isFlag = false;
     this->_cmd.clear();
     this->_args.clear();
-    this->_flags.clear();
 
     if (!bufferTmp.contains(' ')){
         this->_cmd = bufferTmp;
@@ -21,16 +19,12 @@ void InputParser::parse(QByteArray buffer, int htmlSize){
     else {
         for (int i = 0; i < bufferTmp.size(); i++){
             if (bufferTmp[i] == ' ' && !isArg) isArg = true;
-            if (bufferTmp[i] == '-' && !isFlag){
-                isArg = false;
-                isFlag = true;
-            }
-            if (!isArg && !isFlag){
+
+            if (!isArg){
                 cmdTmp.append(bufferTmp[i]);
             }
 
-
-            if (isArg){
+            else {
                 if (bufferTmp[i] != ' '){
                     argTmp.append(bufferTmp[i]);
                 }
@@ -39,16 +33,7 @@ void InputParser::parse(QByteArray buffer, int htmlSize){
                     this->_args.append(argTmp);
                     argTmp.clear();
                 }
-
             }
-            else if (isFlag && bufferTmp[i] != '-') {
-                QByteArray flagTmp;
-                flagTmp.append('-');
-                flagTmp.append(bufferTmp[i]);
-                this->_flags.append(flagTmp);
-            }
-
-
         }
         if (!cmdTmp.isNull()) this->_cmd = cmdTmp;
     }
@@ -57,9 +42,6 @@ void InputParser::parse(QByteArray buffer, int htmlSize){
 
     qDebug() << "cmd :" << this->_cmd;
 
-    for (int i = 0; i < this->_flags.size(); i++){
-        qDebug() << "flag :" << this->_flags[i];
-    }
     for (int i = 0; i < this->_args.size(); i++){
         qDebug() << "arg :" << this->_args[i];
     }
