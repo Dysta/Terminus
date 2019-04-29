@@ -10,6 +10,7 @@
 #include "commands/cd.h"
 #include "commands/ls.h"
 #include "commands/cat.h"
+#include "commands/echo.h"
 
 class InputParser
 {

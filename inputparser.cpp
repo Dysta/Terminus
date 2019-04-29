@@ -86,6 +86,8 @@ void InputParser::prepareCommand(){
     } else if (this->_cmd == "cat") {
         if (!this->_args.isEmpty())
             this->_command = new Cat(this->_args);
+    } else if (this->_cmd == "echo") {
+        this->_command = new Echo(this->_args);
     } else {
         qDebug() << "unknow command";
     }
