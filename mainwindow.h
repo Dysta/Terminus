@@ -14,6 +14,7 @@
 #include "folder.h"
 #include "file.h"
 #include "user.h"
+#include "color.h"
 
 namespace Ui {
 class MainWindow;
@@ -41,7 +42,7 @@ private:
 
     QWidget* _mainWidget;
     QGridLayout* _grid;
-    QString _html = "<b><span style='color:green'>Jarvis@u-bdx</span>: <span style='color:blue'>~</span> $</b> ";
+    QString _html = "<b><span style='color:" + Color::green + "'>Jarvis@u-bdx</span>: <span style='color:" + Color::cyan + "'>~</span> $</b> ";
 
     Console* _console;
     Command* _cmd;

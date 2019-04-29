@@ -16,12 +16,12 @@ void Ls::command_effect(Console* console, User* user, Folder *f){
     qDebug() << "Dossiers : \n";
     for (Folder* child : f->children()){
         qDebug() << child->getName();
-        answer.append("<span style='color:cyan'>" + child->getName() + "</span>\t");
+        answer.append("<span style='color:" + Color::cyan + "'>" + child->getName() + "/   </span>");
     }
     qDebug() << "Fichiers : \n";
     for (File* child : f->files()){
         qDebug() << child->getName() << ", " << child->getContent();
-        answer.append(child->getName() + "\t");
+        answer.append("<span style='color:" + Color::white + "'>" + child->getName() + "   </span>");
     }
 
     console->appendHtml(answer);

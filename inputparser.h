@@ -9,6 +9,7 @@
 #include "commands/command.h"
 #include "commands/cd.h"
 #include "commands/ls.h"
+#include "commands/cat.h"
 
 class InputParser
 {

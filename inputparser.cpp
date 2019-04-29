@@ -79,7 +79,13 @@ void InputParser::prepareCommand(){
         if (!this->_args.isEmpty())
             this->_command = new Cd(this->_args);
         else
-            qDebug() << "aucun arg";
+            this->_command = new Cd();
+    } else if (this->_cmd == "exit") {
+        qDebug() << "exit cmd : close windows";
+
+    } else if (this->_cmd == "cat") {
+        if (!this->_args.isEmpty())
+            this->_command = new Cat(this->_args);
     } else {
         qDebug() << "unknow command";
     }

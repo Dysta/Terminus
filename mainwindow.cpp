@@ -52,6 +52,7 @@ void MainWindow::createTree() {
     Folder *f3 = new Folder("room_3", f1);
     Folder *f4 = new Folder("room_4", f2);
     this->_tree->addChild(f1);
+    this->_tree->setParent(nullptr);
     f1->addChild(f3);
     f1->addChild(f2);
     f2->addChild(f4);
@@ -78,8 +79,7 @@ void MainWindow::setCmd(Command *cmd)
     _cmd = cmd;
     if (_cmd == nullptr) return;
     _cmd->command_effect(this->_console, this->_user, this->_user->currentFolder());
-    this->_html.replace("~", this->_user->currentFolder()->getName());
-    //TODO: replace ~ by current folder name
+    this->_html.replace(QRegExp(">[a-z0-9~_]{1,}<"), ">" + this->_user->currentFolder()->getName() + "<");
 }
 
 

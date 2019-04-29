@@ -3,8 +3,9 @@
 
 #include <QString>
 
-#include "command.h"
+#include "commands/command.h"
 #include "user.h"
+#include "color.h"
 
 class Ls : public Command
 {

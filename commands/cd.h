@@ -1,7 +1,7 @@
 #ifndef CD_H
 #define CD_H
 
-#include "command.h"
+#include "commands/command.h"
 #include "user.h"
 
 class Cd : public Command
