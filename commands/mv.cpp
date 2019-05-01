@@ -1,4 +1,5 @@
 #include "mv.h"
+#include "console.h"
 
 Mv::Mv() : Command (){}
 
@@ -7,7 +8,7 @@ Mv::Mv(QList<QByteArray> args) : Command(args){}
 void Mv::command_effect(Console *console, User *user){
     qDebug() << "Commande MV lancée !\n";
     if (this->_args.size() < 2){
-        qDebug() << "Need 2 arguments\n";
+        console->appendHtml("Vous denez fournir 2 paramètres");
         return;
     }
     int cpt = 0;
@@ -33,7 +34,7 @@ void Mv::command_effect(Console *console, User *user){
                 }
                 if (fo == user->currentFolder()){
                     validPath = false;
-                    qDebug() << "Bad path argument\n";
+                    console->appendHtml("Mauvas chemin fourni");
                 }
             }
         }

@@ -91,7 +91,8 @@ void Man::man_ls(Console *console) {
 void Man::man_mv(Console *console) {
     console->appendHtml("<b>Page d'information pour <u>Mv</u></b><br />"
                         "<u>Utilisation :</u><br />"
-                        "mv <b>paramètre</b><br /><br />"
+                        "mv <b>file folder</b><br /><br />"
                         "<u>Paramètre :</u><br />"
-                        "un fichier");
+                        "file : un fichier<br />"
+                        "folder : un dossier");
 }
