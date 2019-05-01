@@ -13,6 +13,7 @@
 #include "commands/echo.h"
 #include "commands/chmod.h"
 #include "commands/man.h"
+#include "commands/mv.h"
 
 class InputParser
 {

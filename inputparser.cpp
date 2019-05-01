@@ -81,6 +81,9 @@ void InputParser::prepareCommand(){
     else if (this->_cmd == "man") {
         this->_command = new Man(this->_args);
     }
+    else if (this->_cmd == "mv") {
+        this->_command = new Mv(this->_args);
+    }
     else {
         qDebug() << "unknow command";
     }
