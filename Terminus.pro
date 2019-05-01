@@ -25,6 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
     commands/cd.cpp \
+    commands/mv.cpp \
         mainwindow.cpp \
     console.cpp \
     inputparser.cpp \
@@ -41,6 +42,7 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     commands/cd.h \
+    commands/mv.h \
     console.h \
     inputparser.h \
     commands/ls.h \

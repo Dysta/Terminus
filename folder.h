@@ -11,9 +11,10 @@
 class Folder
 {
 public:
-    Folder(QString name, Folder* parent = nullptr);
-    void addChild(Folder *child);
-    void addFile(File *file);
+    Folder(QString name, Folder* = nullptr);
+    void addChild(Folder *);
+    void addFile(File *);
+    void removeFile(File *);
     QList<Folder *> children() const;
     QList<File *> files() const;
 
