@@ -19,7 +19,9 @@ void Man::command_effect(Console *console, User *user) {
         {"cd", &Man::man_cd},
         {"echo", &Man::man_echo},
         {"cat", &Man::man_cat},
-        {"cadernis", &Man::man_cadernis}
+        {"chmod", &Man::man_chmod},
+        {"ls", &Man::man_ls},
+        {"mv", &Man::man_mv}
     };
 
     if (this->_args.isEmpty() || this->_args.first() == "man") {
@@ -37,21 +39,59 @@ void Man::command_effect(Console *console, User *user) {
 }
 
 void Man::man_man(Console *console) {
-    console->appendHtml("man man");
+    console->appendHtml("<b>Page d'information pour <u>Man</u></b><br />"
+                        "<u>Utilisation :</u><br />"
+                        "man <b>paramètre</b><br /><br />"
+                        "<u>Paramètre :</u><br />"
+                        "cat<br />cd<br />chmod<br />echo<br />ls<br />man<br />mv");
 }
 
 void Man::man_cd(Console* console) {
-    console->appendHtml("man cd");
+    console->appendHtml("<b>Page d'information pour <u>Cd</u></b><br />"
+                        "<u>Utilisation :</u><br />"
+                        "cd <b>paramètre</b><br /><br />"
+                        "<u>Paramètre :</u><br />"
+                        "nom de dossier");
 }
 
 void Man::man_echo(Console* console) {
-    console->appendHtml("man echo");
+    console->appendHtml("<b>Page d'information pour <u>Echo</u></b><br />"
+                        "<u>Utilisation :</u><br />"
+                        "echo <b>paramètre</b><br /><br />"
+                        "<u>Paramètre :</u><br />"
+                        "une phrase/un mot");
 }
 
 void Man::man_cat(Console *console) {
-    console->appendHtml("man cat");
+    console->appendHtml("<b>Page d'information pour <u>Cat</u></b><br />"
+                        "<u>Utilisation :</u><br />"
+                        "cat <b>paramètre</b><br /><br />"
+                        "<u>Paramètre :</u><br />"
+                        "un fichier");
 }
 
-void Man::man_cadernis(Console *console) {
-    console->appendHtml("coucou :)");
+void Man::man_chmod(Console *console) {
+    console->appendHtml("<b>Page d'information pour <u>Chmod</u></b><br />"
+                        "<u>Utilisation :</u><br />"
+                        "cat <b>flag file</b><br /><br />"
+                        "<u>Paramètre :</u><br />"
+                        "flag : + ou - suivit de x ou w ou r<br />"
+                        "file : un nom de fichier");
+}
+
+void Man::man_ls(Console *console) {
+    console->appendHtml("<b>Page d'information pour <u>Ls</u></b><br />"
+                        "<u>Utilisation :</u><br />"
+                        "ls<br /><br />"
+                        "affiche les dossiers en <span style='color:" + Color::cyan + "'>bleu</span><br />"
+                        "affiche les fichiers en <span style='color:" + Color::white + "'>blanc</span> lorsqu'il sont en read/write only<br />"
+                        "affiche les fichiers en <span style='color:" + Color::green + "'>vert</span> lorsqu'ils sont executable");
+}
+
+void Man::man_mv(Console *console) {
+    console->appendHtml("<b>Page d'information pour <u>Cat</u></b><br />"
+                        "<u>Utilisation :</u><br />"
+                        "cat <b>paramètre</b><br /><br />"
+                        "<u>Paramètre :</u><br />"
+                        "un fichier");
 }

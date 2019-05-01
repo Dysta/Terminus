@@ -6,6 +6,7 @@
 
 #include "commands/command.h"
 #include "user.h"
+#include "color.h"
 
 using Func = std::function<void(Console*)>;
 
@@ -21,7 +22,9 @@ private:
     static void man_cd(Console* console);
     static void man_echo(Console* console);
     static void man_cat(Console* console);
-    static void man_cadernis(Console* console);
+    static void man_chmod(Console* console);
+    static void man_ls(Console* console);
+    static void man_mv(Console* console);
 };
 
 #endif // MAN_H
