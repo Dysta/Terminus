@@ -73,9 +73,9 @@ void Man::man_cat(Console *console) {
 void Man::man_chmod(Console *console) {
     console->appendHtml("<b>Page d'information pour <u>Chmod</u></b><br />"
                         "<u>Utilisation :</u><br />"
-                        "cat <b>flag file</b><br /><br />"
+                        "chmod <b>flag file</b><br /><br />"
                         "<u>Paramètre :</u><br />"
-                        "flag : + ou - suivit de x ou w ou r<br />"
+                        "flag : + ou - suivi de x ou w ou r<br />"
                         "file : un nom de fichier");
 }
 
@@ -85,7 +85,7 @@ void Man::man_ls(Console *console) {
                         "ls<br /><br />"
                         "affiche les dossiers en <span style='color:" + Color::cyan + "'>bleu</span><br />"
                         "affiche les fichiers en <span style='color:" + Color::white + "'>blanc</span> lorsqu'il sont en read/write only<br />"
-                        "affiche les fichiers en <span style='color:" + Color::green + "'>vert</span> lorsqu'ils sont executable");
+                        "affiche les fichiers en <span style='color:" + Color::green + "'>vert</span> lorsqu'ils sont executables");
 }
 
 void Man::man_mv(Console *console) {
