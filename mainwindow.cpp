@@ -31,6 +31,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::askName() {
     QString name = QInputDialog::getText(this, "Choisir nom", "nom");
+    name = name.trimmed();
     if (!name.isEmpty()){
         this->_user->setName(name);
         this->_html.replace(QRegExp("Jarvis"), this->_user->name());
