@@ -77,8 +77,7 @@ void InputParser::prepareCommand(){
             this->_command = new Echo(this->_args);
     }
     else if (this->_cmd == "man") {
-        if (!this->_args.isEmpty())
-            this->_command = new Man(this->_args);
+        this->_command = new Man(this->_args);
     }
     else if (this->_cmd == "mv") {
         if (!this->_args.isEmpty())

@@ -24,14 +24,14 @@ void Man::command_effect(Console *console, User *user) {
         {"mv", &Man::man_mv}
     };
 
-    if (this->_args.isEmpty() || this->_args.first() == "man") {
-        man_man(console);
+    if (this->_args.isEmpty()) {
+        console->appendHtml("Quelle page de manuel voulez-vous ?");
         return;
     }
     QByteArray cmd(this->_args.first());
 
     if (map.count(cmd) == 0) {
-        man_man(console);
+        console->appendHtml("Aucune entrée de manuel pour " + cmd);
         return;
     }
 
