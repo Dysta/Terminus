@@ -87,8 +87,8 @@ void Console::keyPressEvent(QKeyEvent *e) {
 
     case Qt::Key_Backspace:
         if (this->_buffer != this->_mw->html() && this->_cursorPos > 0) {
-//            this->_buffer.chop(1);
-            this->_buffer = this->_buffer.remove(this->_cursorPos, 1);
+            this->_buffer.chop(1);
+            //this->_buffer = this->_buffer.remove(this->_cursorPos, 1);
             this->_cursorPos--;
             QPlainTextEdit::keyPressEvent(e);
         }
