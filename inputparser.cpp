@@ -51,6 +51,7 @@ void InputParser::parse(QByteArray buffer, int htmlSize){
 void InputParser::prepareCommand(){
     if (_cmd.isNull() || _cmd.isEmpty()) return;
     this->_command = nullptr;
+
     if (this->_cmd == "ls"){
         if (this->_args.isEmpty())
             this->_command = new Ls();
@@ -58,14 +59,10 @@ void InputParser::prepareCommand(){
             this->_command = new Ls(this->_args);
     }
     else if (this->_cmd == "cd"){
-        if (!this->_args.isEmpty())
-            this->_command = new Cd(this->_args);
-        else
+        if (this->_args.isEmpty())
             this->_command = new Cd();
-    }
-    else if (this->_cmd == "exit") {
-        qDebug() << "exit cmd : close windows";
-
+        else
+            this->_command = new Cd(this->_args);
     }
     else if (this->_cmd == "cat") {
         if (!this->_args.isEmpty())
@@ -76,13 +73,20 @@ void InputParser::prepareCommand(){
             this->_command = new Chmod(this->_args);
     }
     else if (this->_cmd == "echo") {
-        this->_command = new Echo(this->_args);
+        if (!this->_args.isEmpty())
+            this->_command = new Echo(this->_args);
     }
     else if (this->_cmd == "man") {
-        this->_command = new Man(this->_args);
+        if (!this->_args.isEmpty())
+            this->_command = new Man(this->_args);
     }
     else if (this->_cmd == "mv") {
-        this->_command = new Mv(this->_args);
+        if (!this->_args.isEmpty())
+            this->_command = new Mv(this->_args);
+    }
+    else if (this->_cmd == "exit") {
+        qDebug() << "exit cmd : close windows";
+
     }
     else {
         qDebug() << "unknow command";
