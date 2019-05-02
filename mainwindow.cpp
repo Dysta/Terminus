@@ -33,8 +33,7 @@ void MainWindow::askName() {
     QString name = QInputDialog::getText(this, "Choisir nom", "nom");
     if (!name.isEmpty()){
         this->_user->setName(name);
-        qDebug() << "USER NAME : " << _user->name();
-        this->_html.replace(QRegExp(">[A-Za-z]*@"), ">" + this->_user->name() + "@");
+        this->_html.replace(QRegExp("Jarvis"), this->_user->name());
     }
 }
 
