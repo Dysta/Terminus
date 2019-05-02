@@ -15,13 +15,13 @@ void Ls::command_effect(Console* console, User* user){
     qDebug() << "Dossiers : \n";
     for (Folder* child : user->currentFolder()->children()){
         qDebug() << child->getName();
-        answer.append("<span style='color:" + Color::cyan + "'>" + child->getName() + "/   </span>");
+        answer.append("<span style='color:" + Color::cyan + "'>" + child->getName() + " </span>");
     }
     qDebug() << "Fichiers : \n";
     for (File* child : user->currentFolder()->files()){
         qDebug() << child->getName() << ", " << child->getContent();
         color = getColorMode(child->getMode());
-        answer.append("<span style='color:" + color + "'>" + child->getName() + "   </span>");
+        answer.append("<span style='color:" + color + "'>" + child->getName() + " </span>");
     }
 
     console->appendHtml(answer);
